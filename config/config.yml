@@ -1,0 +1,15 @@
+models:
+  - type: main
+    engine: ollama
+    model: llama3.1
+
+rails:
+  input:
+    flows:
+      - block dangerous sql
+
+tracing:
+  enabled: true
+  adapters:
+    - name: FileSystem
+      filepath: "./logs/traces.jsonl"
