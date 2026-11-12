@@ -1,2 +1,3 @@
 -r requirements.txt
+-r semantic_layer_mcp/requirements.txt
 pytest==9.2.0

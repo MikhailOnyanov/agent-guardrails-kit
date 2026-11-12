@@ -1,0 +1,22 @@
+version: 2
+
+semantic_models:
+  - name: orders
+    model: ref('fct_orders')
+    defaults: {agg_time_dimension: ordered_at}
+    entities:
+      - {name: order_id, type: primary}
+    dimensions:
+      - {name: ordered_at, type: time, type_params: {time_granularity: day}}
+      - {name: status, type: categorical}
+      - {name: region, type: categorical}
+    measures:
+      - {name: net_amount, agg: sum, expr: amount_net}
+
+metrics:
+  - name: revenue
+    label: Выручка
+    description: "Чистая выручка по завершённым заказам, без НДС и возвратов"
+    type: simple
+    type_params: {measure: net_amount}
+    filter: "{{ Dimension('order_id__status') }} = 'completed'"
